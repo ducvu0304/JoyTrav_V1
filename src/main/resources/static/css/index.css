@@ -1,0 +1,245 @@
+* {
+}
+:root {
+    --main-color: #4b548b;
+    --facebook-color: #3b5999;
+    --instagram-color: #e1306c;
+    --youtube-color: #de463b;
+    --twitter-color: #46c1f6;
+    --github-color: #333;
+}
+
+.btn-header a {
+    text-decoration: none;
+    color: #6c757d;
+}
+
+/* Remove input's spin box for Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+/* for Firefox */
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+h3,
+header .nav-link,
+.modifiedBtn {
+    color: var(--main-color) !important;
+}
+.modifiedBtn {
+    border: 1px solid var(--main-color) !important;
+    border-radius: 10%;
+}
+.modifiedBtn:hover {
+    background-color: var(--main-color) !important;
+    color: #fff !important;
+}
+
+#homeCarouselButtonsContainer {
+    top: 30%;
+    left: 17%;
+    right: 83%;
+    width: 40%;
+    height: 5%;
+}
+#homeCarouselButtonsContainer button {
+    border: none;
+    background-image: linear-gradient(to left, #e1306c 0%, #dc2430  51%, #e48148  100%);
+    margin: 10px;
+    padding: 15px 45px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: #FFF;
+    /* box-shadow: 0 0 20px #FFF; */
+    border-radius: 10px;
+    display: block;
+}
+#homeCarouselButtonsContainer button:hover {
+    background-position: right center; /* change the direction of the change here */
+    color: #fff;
+    text-decoration: none;
+}
+
+
+
+#homeSearchForm,
+#tourSearchForm, #hotelSearchForm {
+    /* background-color: #d6d6d677; */
+    background: linear-gradient(to top, #b9b9b952, #ffffffec);
+    border-radius: 20px;
+    top: 40%;
+    left: 14%;
+    height: 35%;
+}
+
+
+/* Gallery styles */
+.image-container {
+    /* position: relative; */
+    overflow: hidden;
+}
+.overlay-text {
+    border-radius: 2%;
+    width: 94%;
+    background: #18181867;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    color: #FFF;
+}
+.image-container:hover .overlay-text {
+    opacity: 1;
+    color: #FFF;
+}
+
+/* Footer icon styles */
+
+.footer .nav-item a {
+    /* overriding bootstrap's properties */
+    color: #808080 !important;
+}
+.footer .nav-item a:hover {
+    /* overriding bootstrap's properties */
+    /* padding: 10px 0px 0px 10px; */
+    padding-left: 15px;
+}
+
+.icon {
+    cursor: pointer;
+    position: relative;
+    /* color: #0097b2; */
+}
+
+.icon i {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    font-size: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon .tooltip {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    font-size: 20px;
+    font-weight: 500;
+    border-radius: 25px;
+    opacity: 0;
+    pointer-events: none;
+    box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+}
+
+.tooltip,
+.icon i {
+    transition: 0.3s;
+}
+
+.icon:hover .tooltip {
+    opacity: 1;
+    pointer-events: auto;
+    top: 55px;
+}
+
+.icon:hover i {
+    color: white;
+}
+
+/* Social media colors */
+
+.facebook a {
+    color: var(--facebook-color);
+}
+.twitter a {
+    color: var(--twitter-color);
+}
+.github a {
+    color: var(--github-color);
+}
+.instagram a {
+    color: var(--instagram-color);
+}
+.youtube a {
+    color: var(--youtube-color);
+}
+.facebook .tooltip:before,
+.facebook:hover i,
+.facebook .tooltip {
+    background: var(--facebook-color);
+}
+
+.github .tooltip:before,
+.github:hover i,
+.github .tooltip {
+    background: var(--github-color);
+}
+
+.twitter .tooltip:before,
+.twitter:hover i,
+.twitter .tooltip {
+    background: var(--twitter-color);
+}
+
+.instagram .tooltip:before,
+.instagram:hover i,
+.instagram .tooltip {
+    background: var(--instagram-color);
+}
+
+.youtube .tooltip:before,
+.youtube:hover i,
+.youtube .tooltip {
+    background: var(--youtube-color);
+}
+
+/*Login - Signup*/
+#loginForm,
+#signupForm {
+    min-height: 500px;
+    width: 100%;
+    background-image: url("https://m.media-amazon.com/images/I/71XHfS2XABL.jpg");
+    background-repeat: no-repeat;
+}
+
+.account-dropdown {
+    position: relative;
+    left: 0;
+}
+
+.menu-dropdown  {
+    display: none;
+    margin-top: 1px;
+    border: 1px solid #d3d4d5;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    background: #fff;
+    list-style: none;
+    position: absolute;
+    left: 0;
+    text-align: left;
+    padding: 10px 10px;
+    width: 130px;
+    height: 100px;
+    z-index: 1;
+    transition: width 2s, height 4s;
+}
+
+.menu-item {
+    text-decoration: none;
+    color: #4a4d50;
+}
+
+.show-menu {
+    display: block;
+}

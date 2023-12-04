@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta charset="UTF-8">
+    <title>JoyTrav</title>
+    <link href="/css/index.css" rel="stylesheet"/>
+
+    <!-- Bootstrap -->
+    <link
+            crossorigin="anonymous"
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+            rel="stylesheet"
+    />
+
+    <script
+            crossorigin="anonymous"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    ></script>
+
+    <!-- gg fonts icons -->
+    <link
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+            rel="stylesheet"
+    />
+    <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+            rel="stylesheet"
+            type="text/css"
+    />
+
+    <!--  jQuery, Moment.js and Date Range Picker's files -->
+    <script
+            src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"
+            type="text/javascript"
+    ></script>
+    <script
+            src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"
+            type="text/javascript"
+    ></script>
+    <script
+            src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"
+            type="text/javascript"
+    ></script>
+    <link
+            href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"
+            rel="stylesheet"
+            type="text/css"
+    />
+
+</head>
+<body>
+<!---------------------------- Header      --------------------------->
+<nav layout:replace="~{components/header :: header}"></nav>
+<!---------------------------- End Header  --------------------------->
+
+<!--------------------------- SignUp-Form  --------------------------->
+
+<!-- Signup-Form -->
+<div
+        class="p-0 d-flex flex-row justify-content-between gap-2 w-100 h-100"
+        id="signupForm"
+>
+    <div
+            class="signup-left w-75 h-100 text-white d-flex flex-column gap-5 justify-content-between"
+    >
+        <h4 class="p-5">Lorem ipsum dolor sit amet.</h4>
+        <br/>
+        <br/>
+        <p class="p-5">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis
+            molestiae vitae nostrum officiis consectetur nam nobis impedit
+            veritatis accusamus earum in, nesciunt reiciendis modi perferendis
+            ex vero eveniet aspernatur at!
+        </p>
+    </div>
+
+    <div class="signup-right w-50 h-100 bg-light">
+        <h3 class="text-center text-secondary pt-5">
+            <strong>Signup</strong>
+        </h3>
+        <form th:action="@{/signup/processRegistration}" th:object="${signupForm}"
+              class="text-secondary p-5 m-0 d-flex flex-column gap-2"
+              method="post">
+            <div class="container p-0 d-flex gap-3">
+                <div class="container p-0 d-flex flex-column justify-content-start gap-1">
+                    <label class="" for="firstName">First Name</label>
+                    <input  th:field="*{firstName}"
+                            class="form-control"
+                            id="firstName"
+                            placeholder="Enter Your First Name"
+                            type="text"/>
+                    <span  th:each="error : ${#fields.errors('firstName')}" th:text="${error}"
+                          class="text-danger">
+                        Please Enter first name
+                    </span>
+                </div>
+                <div class="container p-0 d-flex flex-column justify-content-start gap-1">
+                    <label class="" for="lastName">Last Name</label>
+                    <input  th:field="*{lastName}"
+                            class="form-control"
+                            id="lastName"
+                            placeholder="Enter Your Last Name"
+                            type="text"/>
+                    <span   th:each="error : ${#fields.errors('lastName')}" th:text="${error}"
+                           class="text-danger">
+                        Invalid Input
+                    </span>
+                </div>
+            </div>
+            <div class="container p-0 d-flex flex-column justify-content-start gap-1">
+                <label class="" for="inputEmail">Email</label>
+                <input  th:field="*{email}"
+                        class="form-control"
+                        id="inputEmail"
+                        placeholder="Enter Email"
+                        type="text"
+                />
+                <span th:if="${#fields.errors('email')}"
+                      class="text-danger"
+                >
+                    <span th:each="error,loop : ${#fields.errors('email')}" th:if="${loop.index == 0}" th:text="${error}" >Invalid Input</span>
+                </span>
+            </div>
+            <div class="container p-0 d-flex flex-column justify-content-start gap-1">
+                <label class="" for="password">Password</label>
+                <input  th:field="*{password}"
+                        class="form-control"
+                        id="password"
+                        placeholder="Enter Password"
+                        type="password"
+                />
+                <span th:if="${#fields.errors('password')}"
+                      class="text-danger">
+                    <span th:each="error,loop : ${#fields.errors('password')}" th:if="${loop.index == 0}" th:text="${error}">
+                          Invalid Input
+                    </span>
+                </span>
+
+            </div>
+            <div class="container p-0 d-flex flex-column justify-content-start gap-1">
+                <label class="" for="rePassword">Confirm Password</label>
+                <input  th:field="*{rePassword}"
+                        class="form-control"
+                        id="rePassword"
+                        placeholder="Enter Your Password Again"
+                        type="password"/>
+                <span th:if="${#fields.errors('rePassword')}"
+                      class="text-danger">
+                    <span th:each="error,loop : ${#fields.errors('rePassword')}" th:if="${loop.index == 0}" th:text="${error}">
+                          Invalid Input
+                    </span>
+                </span>
+            </div>
+            <!-- <br /> -->
+            <button class="mt-3 btn btn-outline-info" type="submit">Signup</button>
+            <div class="container p-0 gap-0 d-flex flex-column justify-content-center text-center">
+                <h6 class="d-flex align-items-center justify-content-center">
+                    Already have an account?
+                    <a th:href="@{/sign-in}" class="btn btn-link" type="button">
+                        Login here
+                    </a>
+                </h6>
+            </div>
+        </form>
+    </div>
+</div>
+<!--  -->
+</div>
+<!--------------------------- End SignUp-Form  --------------------------->
+
+
+<!---------------------------- Footer      --------------------------->
+<footer layout:replace="~{components/footer :: footer}"></footer>
+<!---------------------------- End Footer  --------------------------->
+</body>
+</html>

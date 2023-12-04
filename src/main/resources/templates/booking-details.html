@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="/css/index.css" />
+    <link rel="stylesheet" href="/css/booking.css" />
+
+
+    <!-- Bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://getbootstrap.com/docs/5.3/assets/css/docs.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- gg fonts icons -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+    />
+
+    <!--  jQuery, Moment.js and Date Range Picker's files -->
+<!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>-->
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"
+    />
+    <title>JoyTrav</title>
+
+  </head>
+  <body>
+  <nav layout:replace="~{components/header.html :: header}"></nav>
+  <hr>
+    <!-- body -->
+
+    <div class="container pt-3 d-flex gap-5" th:object="${tour}">
+      <div id="snackbar-payment" class="">Payment method is has not chosen! please choose payment method</div>
+      <!-- box 1 -->
+      <div class="container p-0 w-50 d-flex flex-column text-secondary p-4 border border-secondary rounded" style="max-height: 1000px;">
+        <h5 class="text-primary text-center">Booking Summary</h5>
+        <img th:src="${tour.getPictureList().get(0).getLink()}" class="w-100 mb-3" alt="ảnh minh họa" />
+        <h6 class="text-danger d-flex align-items-center">
+          <span class="material-symbols-outlined px-2">
+            confirmation_number
+          </span>
+          Tour ID:  <input class="text-danger input-disable input-tour-id" disabled id="tourId" th:value="${tour.getId()}"/>
+        </h6>
+        <h5 class="text-start text-dark" th:text="${tour.getTitle()}">
+          Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.
+        </h5>
+        <h6 class="d-flex justify-content-between">
+          Depart From:
+          <span class="fw-light" th:text="|${tour.getDeparture()}|">Ho Chi Minh </span>
+        </h6>
+        <h6 class="d-flex gap-4 align-items-center justify-content-between">
+          <label for="displaySelectedDate">Depart Date:</label>
+          <input
+            readonly
+            id="displaySelectedDate"
+            name="displaySelectedDate"
+            class="form-control w-50 text-center fw-light"
+            type="text"
+            th:value="${tour.getDepartureDate()}"
+          />
+        </h6>
+
+        <h6 class="d-flex gap-4 align-items-center justify-content-between">
+          <label for="displaySelectedDate">Duration:</label>
+          <span class="fw-light"> 3 days</span>
+        </h6>
+
+        <div>
+          <h6 class="d-flex justify-content-between">
+            Customers:
+            <div class="d-flex align-items-center gap-2" id="total-customers">
+              <span class="fw-light"><input id="customerTotal" type="text input-disable" value="1"></span>
+              <span class="material-symbols-outlined"> diversity_3 </span>
+            </div>
+          </h6>
+          <ul class="list-group">
+            <li
+              class="list-group-item d-flex justify-content-between text-secondary"
+            >
+              Adults:
+              <span id="adults-total">
+                <input id="adultsNumber" class="input-disable input-count" type="text" value="0" disabled> x
+                <input id="adultsPrice" class="input-disable input-price"  type="text" th:value="${tour.getPrice()*0.7}" disabled>$
+              </span>
+            </li>
+            <li
+              class="list-group-item d-flex justify-content-between text-secondary"
+            >
+              Children:
+              <span id="children-total">
+                <input id="childrenNumber" class="input-disable input-count" type="text" value="0" disabled> x
+                <input id="childrenPrice" class="input-disable input-price"  type="text" th:value="${tour.getPrice()*0.7*0.8}" disabled>$
+              </span>
+            </li>
+            <li
+              class="list-group-item d-flex justify-content-between text-secondary"
+            >
+              Toddlers:
+              <span id="toddlers-total">
+                <input id="toddlersNumber" class="input-disable input-count" type="text" value="0" disabled> x
+                <input id="toddlersPrice" class="input-disable input-price"  type="text" th:value="${tour.getPrice()*0.2}" disabled>$
+              </span>
+            </li>
+            <li
+              class="list-group-item d-flex justify-content-between text-secondary"
+            >
+              Infants:
+              <span id="infants-total">
+                <input id="infantsNumber" class="input-disable input-count" type="text" value="0" disabled> x
+                <input id="infantsPrice" class="input-disable input-price"  type="text" value="0" disabled>$
+              </span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="input-group py-4">
+          <span class="input-group-text btn btn-outline-primary disabled"
+            >Promo Code:</span
+          >
+          <input type="text" class="form-control border-primary" />
+          <span
+            class="material-symbols-outlined input-group-text btn btn-outline-primary d-flex align-items-center"
+          >send
+          </span>
+        </div>
+
+        <h6 class="d-flex justify-content-between">
+          Sub-Total:
+          <span class="fw-bold text-danger px-2"><input id="subPayment" class="fw-bold text-danger px-2" value="2000" readonly disabled>$</span>
+        </h6>
+        <h6 class="d-flex justify-content-between">
+          Total:
+          <span class="fw-bold text-danger px-2"><input id="totalPayment" class="fw-bold text-danger px-2" value="2000" readonly disabled>$</span>
+        </h6>
+
+        <button id="booking"
+                onclick="bookingNow()"
+          type="submit"
+          class="btn btn-danger mt-3 p-2 d-flex justify-content-center align-items-center gap-2"
+          data-bs-toggle="tooltip"
+          data-bs-placement="right"
+          data-bs-title="Kindly ensure the verification of all entered information prior to completing the booking process."
+        >
+          Book Now
+          <span class="material-symbols-outlined">
+            shopping_cart_checkout
+          </span>
+        </button>
+      </div>
+      <!-- box 1 end -->
+
+      <!-- divider -->
+
+      <!-- box 2 -->
+      <div class="container p-0 w-100  p-4 border border-secondary rounded">
+        <div class="container text-secondary">
+          <h5 class="text-primary">Contact Informations:</h5>
+          <div class="row pb-3">
+            <div class="col d-flex flex-column">
+              <label for="customerName">Full Name</label>
+              <input type="text" name="customerName" class="form-control" id="customerName" />
+              <p id="customerNameMessage" class="text-danger"></p>
+            </div>
+            <div class="col d-flex flex-column">
+              <label for="customerEmail">Email</label>
+              <input type="text" name="email" class="form-control" id="customerEmail" />
+              <p id="customerEmailMessage" class="text-danger"></p>
+            </div>
+          </div>
+          <div class="row pb-3">
+            <div class="col d-flex flex-column">
+              <label for="customerPhone">Phone Number</label>
+              <input
+                type="text"
+                name="phone-number"
+                class="form-control"
+                id="customerPhone"
+              />
+              <p id="customerPhoneMessage" class="text-danger"></p>
+            </div>
+            <div class="col d-flex flex-column">
+              <label for="customerAddress">Address</label>
+              <input type="text" name="address" class="form-control" id="customerAddress" />
+              <p id="customerAddressMessage" class="text-danger"></p>
+            </div>
+          </div>
+
+          <h5 class="text-primary m-0">Booking Details:</h5>
+          <div class="container p-0 d-flex flex-row gap-5">
+            <div
+              class="container w-50 py-2 p-0 d-flex flex-column justify-content-start"
+            >
+              <label for="departuredate"> Select Departure Date:</label>
+
+              <input
+                type="button"
+                name="departuredate"
+                class="btn btn-warning w-100 text-light"
+              />
+            </div>
+            <div class="container p-0 row">
+              <!--  -->
+              <div class="col">
+                <div class="container p-2">
+                  <span
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    data-bs-custom-class="custom-tooltip"
+                    data-bs-title="12 years and older">Adults:</span
+                  >
+                  <div
+                    class="btn-group w-100"
+                    role="group"
+                    aria-label="Basic outlined example"
+                  >
+                    <button
+                      type="button"
+                      class="btn btn-outline-primary d-flex align-items-center justify-content-center"
+                      onclick="updateCounter('adults', -1)"
+                    >
+                      <span class="material-symbols-outlined"> remove </span>
+                    </button>
+                    <input
+                      type="button"
+                      class="btn btn-outline-primary d-flex align-items-center justify-content-center"
+                      disabled
+                      value="1"
+                      min="1"
+                      id="adults-counter"
+                    />
+                    <button
+                      type="button"
+                      class="btn btn-outline-primary d-flex align-items-center justify-content-center"
+                      onclick="updateCounter('adults', 1)"
+                    >
+                      <span class="material-symbols-outlined"> add </span>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="container p-2">
+                  <span
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    data-bs-custom-class="custom-tooltip"
+                    data-bs-title=" 2 - 4 years old"
+                    >Toddlers:</span
+                  >
+                  <div
+                    class="btn-group w-100"
+                    role="group"
+                    aria-label="Basic outlined example"
+                  >
+                    <button
+                      onclick="updateCounter('toddlers', -1)"
+                      type="button"
+                      class="btn btn-outline-primary d-flex align-items-center justify-content-center"
+                    >
+                      <span class="material-symbols-outlined"> remove </span>
+                    </button>
+                    <input
+                      type="button"
+                      class="btn btn-outline-primary d-flex align-items-center justify-content-center"
+                      disabled
+                      value="0"
+                      id="toddlers-counter"
+                    />
+                    <button
+                      onclick="updateCounter('toddlers', 1)"
+                      type="button"
+                      class="btn btn-outline-primary d-flex align-items-center justify-content-center"
+                    >
+                      <span class="material-symbols-outlined"> add </span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col">
+                <div class="container p-2">
+                  <span
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    data-bs-custom-class="custom-tooltip"
+                    data-bs-title="5 - 11 years old"
+                    >Children:</span
+                  >
+                  <div
+                    class="btn-group w-100"
+                    role="group"
+                    aria-label="Basic outlined example"
+                  >
+                    <button
+                      onclick="updateCounter('children', -1)"
+                      type="button"
+                      class="btn btn-outline-primary d-flex align-items-center justify-content-center"
+                    >
+                      <span class="material-symbols-outlined"> remove </span>
+                    </button>
+                    <input
+                      type="button"
+                      class="btn btn-outline-primary d-flex align-items-center justify-content-center"
+                      disabled
+                      value="0"
+                      id="children-counter"
+                    />
+                    <button
+                      onclick="updateCounter('children', 1)"
+                      type="button"
+                      class="btn btn-outline-primary d-flex align-items-center justify-content-center"
+                    >
+                      <span class="material-symbols-outlined"> add </span>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="container p-2">
+                  <span
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    data-bs-custom-class="custom-tooltip"
+                    data-bs-title="Under 2 years old"
+                    >Infants:</span
+                  >
+                  <div
+                    class="btn-group w-100"
+                    role="group"
+                    aria-label="Basic outlined example"
+                  >
+                    <button
+                      onclick="updateCounter('infants', -1)"
+                      type="button"
+                      class="btn btn-outline-primary d-flex align-items-center justify-content-center"
+                    >
+                      <span class="material-symbols-outlined"> remove </span>
+                    </button>
+                    <input
+                      type="button"
+                      class="btn btn-outline-primary d-flex align-items-center justify-content-center"
+                      disabled
+                      value="0"
+                      id="infants-counter"
+                    />
+                    <button
+                      onclick="updateCounter('infants', 1)"
+                      type="button"
+                      class="btn btn-outline-primary d-flex align-items-center justify-content-center"
+                    >
+                      <span class="material-symbols-outlined"> add </span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <!--  -->
+            </div>
+          </div>
+
+          <div class="container p-0">
+            <h5 class="text-primary">Customer List Details:</h5>
+
+            <div id="customerDetails" class="container p-0">
+              <!-- start -->
+              <table class="table text-center">
+                <thead>
+                  <tr>
+                    <th scope="col" class="text-secondary">#</th>
+                    <th
+                      scope="col"
+                      style="min-width: 250px"
+                      class="text-secondary"
+                    >
+                      Full Name
+                    </th>
+                    <th scope="col" class="text-secondary">Gender</th>
+                    <th scope="col" class="text-secondary">Date of Birth</th>
+                  </tr>
+                </thead>
+                <tbody class="text-secondary" id="customer-details-body">
+                  <tr>
+                    <td><span id="Adult-1">Adult-1</span></td>
+                    <td>
+                      <input type="text" name="fullname" class="form-control" />
+                    </td>
+                    <td>
+                      <select class="form-select form-select">
+                        <option value="1">Male</option>
+                        <option value="2">Female</option>
+                      </select>
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        id="birthdayAdult1"
+                        name="birthdayAdult1"
+                        value=""
+                        class="form-control text-center"
+                      />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <!--  end -->
+            </div>
+          </div>
+
+          <!-- payment -->
+          <div class="accordion w-100 py-3" id="paymentMethodsAccordion">
+            <h5 class="text-primary text-center">Choose a Payment Method:</h5>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button">
+                  <input
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseOne"
+                    aria-expanded="false"
+                    aria-controls="collapseOne"
+                    class="form-check-input m-0"
+                    type="radio"
+                    name="inlineRadioOptions"
+                    id="inlineRadio1"
+                    value="Cash"
+                  />
+                  <label class="form-check-label px-3 w-100" for="inlineRadio1"
+                    >Cash</label
+                  >
+                </button>
+              </h2>
+              <div
+                id="collapseOne"
+                class="accordion-collapse collapse"
+                data-bs-parent="#paymentMethodsAccordion"
+              >
+                <div class="accordion-body">
+                  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ut
+                  soluta deleniti illum laboriosam mollitia consequatur! Facilis
+                  laboriosam perspiciatis dolorum officiis quisquam aut
+                  excepturi aspernatur autem! Minima, nobis nostrum.
+                  Reprehenderit, id?
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button">
+                  <input
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseTwo"
+                    aria-expanded="false"
+                    aria-controls="collapseTwo"
+                    class="form-check-input m-0"
+                    type="radio"
+                    name="inlineRadioOptions"
+                    id="inlineRadio2"
+                    value="Credit Card"
+                  />
+                  <label class="form-check-label px-3 w-100" for="inlineRadio2">
+                    Credit Card</label
+                  >
+                </button>
+              </h2>
+              <div
+                id="collapseTwo"
+                class="accordion-collapse collapse"
+                data-bs-parent="#paymentMethodsAccordion"
+              >
+                <div class="accordion-body">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Illum, adipisci laboriosam quod error pariatur iste iusto
+                  inventore dolorem voluptatibus reprehenderit sunt itaque
+                  consequuntur aliquam aperiam deserunt veritatis magnam
+                  repudiandae numquam.
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button">
+                  <input
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseThree"
+                    aria-expanded="false"
+                    aria-controls="collapseThree"
+                    class="form-check-input m-0"
+                    type="radio"
+                    name="inlineRadioOptions"
+                    id="inlineRadio3"
+                    value="Bank"
+                  />
+                  <label class="form-check-label px-3 w-100" for="inlineRadio3">
+                    Bank Transfer</label
+                  >
+                </button>
+              </h2>
+              <div
+                id="collapseThree"
+                class="accordion-collapse collapse"
+                data-bs-parent="#paymentMethodsAccordion"
+              >
+                <div class="accordion-body">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Delectus odio pariatur, maxime voluptate dolor rem animi illo
+                  accusantium alias mollitia, sequi nihil, incidunt aliquid
+                  esse. Commodi assumenda animi ab dignissimos.
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- payment end -->
+
+          <div class="container py-4 p-0 d-flex justify-content-end">
+            <div class="w-100">
+              <label for="noteTextArea" class="form-label"
+                >Please feel free to send us notes</label
+              >
+              <textarea
+                class="form-control"
+                id="noteTextArea"
+                rows="3"
+              ></textarea>
+            </div>
+          </div>
+
+          <!--  -->
+        </div>
+      </div>
+      <!-- box 2 end -->
+    </div>
+
+    <!------------------ Footer ------------------->
+    <br>
+    <br>
+    <footer layout:replace="~{components/footer.html :: footer}"></footer>
+    <!-- body end -->
+    <script src="/js/index.js"></script>
+    <script>
+      // bootstrap tooltip init
+      const tooltipTriggerList = document.querySelectorAll(
+        '[data-bs-toggle="tooltip"]'
+      );
+      const tooltipList = [...tooltipTriggerList].map(
+        (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
+      );
+      // tooltip init end
+
+      // depart date picker init
+      function initializeDateRangePicker(inputName) {
+        var minDate = moment().add(7, "days");
+
+        $('input[name="' + inputName + '"]').daterangepicker(
+          {
+            singleDatePicker: true,
+            showDropdowns: true,
+            minDate: minDate,
+            maxDate: moment().add(3, "years"),
+          },
+          function (start, end, label) {
+            var formattedDate = start.format("DD/MM/YYYY");
+            console.log(start, end, label, formattedDate);
+            document.getElementById("displaySelectedDate").value =
+              formattedDate;
+          }
+        );
+      }
+      initializeDateRangePicker("departuredate");
+
+      // customer dob picker init
+      function initializeDobPicker(inputName) {
+        $('input[name="birthday' + inputName + '"]').daterangepicker(
+          {
+            singleDatePicker: true,
+            showDropdowns: true,
+            drops: "auto",
+            minYear: 1901,
+            maxYear: parseInt(moment().format("YYYY"), 10),
+          },
+          function (start, end, label) {
+            var years = moment().diff(start, "years");
+            document.getElementById(`birthday${inputName}`).value =
+              start.format("MM/DD/YYYY");
+            // console.log(start.format("MM/DD/YYYY"));
+          }
+        );
+      }
+      initializeDobPicker("Adult"); // nhận param là mã KH
+
+      // function update số lượng dùng chung cho 4 đối tượng
+      function updateCounter(category, increment) {
+        const counterElement = document.getElementById(`${category}-counter`);
+        let counterValue = parseInt(counterElement.value, 10) || 0;
+
+        // Ensure the counter value doesn't go below the minimum value
+        if (category === "adults") {
+          counterValue = Math.max(1, counterValue + increment);
+        } else {
+          counterValue = Math.max(0, counterValue + increment);
+        }
+        counterElement.value = counterValue;
+        updateTotals();
+      }
+
+      // Function to update totals
+
+      const customerDetailsArray = [];
+
+      // Function to update totals and manage customer details
+      function updateTotals() {
+        const adultsTotal = document.getElementById("adults-total");
+        const childrenTotal = document.getElementById("children-total");
+        const toddlersTotal = document.getElementById("toddlers-total");
+        const infantsTotal = document.getElementById("infants-total");
+
+        // payment
+        const adultsNumber = document.getElementById("adultsNumber");
+        const childrenNumber = document.getElementById("childrenNumber");
+        const toddlersNumber = document.getElementById("toddlersNumber");
+        const infantsNumber = document.getElementById("infantsNumber");
+        const customerTotal = document.getElementById("customerTotal");
+
+        // Get current values of counters
+        const adultsCount =
+                parseInt(document.getElementById("adults-counter").value, 10) || 0;
+        const childrenCount =
+                parseInt(document.getElementById("children-counter").value, 10) || 0;
+        const toddlersCount =
+                parseInt(document.getElementById("toddlers-counter").value, 10) || 0;
+        const infantsCount =
+                parseInt(document.getElementById("infants-counter").value, 10) || 0;
+
+
+        // Render customer details
+        const customerDetailsBody = document.getElementById(
+                "customer-details-body"
+        );
+        customerDetailsBody.innerHTML = ""; // Clear existing rows
+
+        for (let i = 1; i <= adultsCount; i++) {
+          renderCustomerRow(customerDetailsBody, `Adult`);
+          initializeDobPicker(`Adult`);
+        }
+
+        for (let i = 1; i <= childrenCount; i++) {
+          renderCustomerRow(customerDetailsBody, `Child`);
+          initializeDobPicker(`Child`);
+        }
+
+        for (let i = 1; i <= toddlersCount; i++) {
+          renderCustomerRow(customerDetailsBody, `Toddler`);
+          initializeDobPicker(`Toddler`);
+        }
+
+        for (let i = 1; i <= infantsCount; i++) {
+          renderCustomerRow(customerDetailsBody, `Infant`);
+          initializeDobPicker(`Infant`);
+        }
+
+
+        // // Update total numbers
+        adultsNumber.value = adultsCount;
+        childrenNumber.value = childrenCount;
+        toddlersNumber.value = toddlersCount;
+        infantsNumber.value = infantsCount;
+
+
+        let totalCustomers = adultsCount + childrenCount + toddlersCount + infantsCount;
+        customerTotal.value = totalCustomers;
+
+
+        //price
+        const adultsPrice = document.getElementById("adultsPrice");
+        const childrenPrice = document.getElementById("childrenPrice");
+        const toddlersPrice = document.getElementById("toddlersPrice");
+        const infantsPrice = document.getElementById("infantsPrice");
+        const subPayment = document.getElementById("subPayment");
+        const totalPayment = document.getElementById("totalPayment");
+
+        let totalPrice =  adultsCount*adultsPrice.value + childrenCount*childrenPrice.value + toddlersCount*toddlersPrice.value + infantsCount*infantsPrice.value;
+        subPayment.value = totalPrice ;
+        totalPayment.value = totalPrice;
+      }
+
+
+      function renderCustomerRow(container, customerType) {
+        const row = document.createElement("tr");
+        row.classList.add("passenger-info")
+        row.innerHTML = `
+        <td>
+            <input class="group-age text-center bg-white "
+            value="${customerType}"  disabled />
+        </td>
+        <td>
+          <input type="text" name="fullname" class="passenger-name form-control" />
+          <p class="fullname-valid text-danger"></p>
+        </td>
+        <td>
+          <select class="passenger-gender form-select form-select">
+            <option value="1">Male</option>
+            <option value="0">Female</option>
+          </select>
+        </td>
+        <td>
+          <input
+            type="text"
+            id="birthday${customerType.replace(/\s/g, "")}"
+            name="birthday${customerType.replace(/\s/g, "")}"
+            value=""
+            class="passenger-dob form-control text-center"
+          />
+        </td>
+  `;
+        container.appendChild(row);
+
+        // Add event listeners to log input values when they change
+        const fullnameInput = row.querySelector('input[name="fullname"]');
+        const genderSelect = row.querySelector("select");
+        const birthdayInput = row.querySelector(
+          `input[name="birthday${customerType.replace(/\s/g, "")}"]`
+        );
+
+        // Call the function to initialize the date picker
+        initializeDobPicker(customerType.replace(/\s/g, ""));
+
+        // Function to create and save the initial object
+        function saveInitialObject() {
+          const initialObject = {
+            CustomerType: customerType,
+            Fullname: fullnameInput.value,
+            Gender: genderSelect.value,
+            Birthday: birthdayInput.value,
+          };
+
+          // Save initial values to the array
+          saveDetailsToArray(initialObject);
+
+          console.log(customerDetailsArray); // list khách hàng để đẩy lên server
+        }
+
+        // Call the function to create and save the initial object
+        saveInitialObject();
+
+        fullnameInput.addEventListener("input", () => {
+          // Update the Fullname property of the object and save to the array
+          saveInitialObject();
+        });
+
+        genderSelect.addEventListener("change", () => {
+          // Update the Gender property of the object and save to the array
+          saveInitialObject();
+        });
+
+        birthdayInput.addEventListener("change", () => {
+          // Update the Birthday property of the object and save to the array
+          saveInitialObject();
+        });
+      }
+
+      // Function to save customer details to the array
+      function saveDetailsToArray(detailsObject) {
+        // Check if the object already exists in the array
+        const existingIndex = customerDetailsArray.findIndex(
+          (obj) => obj.CustomerType === detailsObject.CustomerType
+        );
+
+        // If the object exists, update it; otherwise, push it to the array
+        if (existingIndex !== -1) {
+          customerDetailsArray[existingIndex] = detailsObject;
+        } else {
+          customerDetailsArray.push(detailsObject);
+        }
+
+        // console.log(detailsObject);
+      }
+
+      // Initial update and rendering
+      updateTotals();
+
+      // Process booking
+      function validateCustomerInfo(customerName, customerEmail, customerPhone, customerAddress) {
+          const regexPhoneNumber = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+          const  regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+          const customerNameMessage = document.getElementById("customerNameMessage");
+          const customerEmailMessage = document.getElementById("customerEmailMessage");
+          const customerPhoneMessage = document.getElementById("customerPhoneMessage");
+          const customerAddressMessage = document.getElementById("customerAddressMessage");
+
+          if(customerName.length === 0) {
+            customerNameMessage.innerHTML = "Please enter full name !";
+            return  true;
+          }else {
+            customerNameMessage.innerHTML = "";
+          }
+
+          if(customerEmail.length === 0) {
+            customerEmailMessage.innerHTML = "Please enter email !";
+            return  true;
+          }else if(!regexEmail.test(customerEmail)) {
+            customerEmailMessage.innerHTML = "Email invalid !";
+            return  true;
+          }else {
+            customerEmailMessage.innerHTML = "";
+          }
+
+          if(!regexPhoneNumber.test(customerPhone)){
+            customerPhoneMessage.innerHTML = "Please enter phone number !";
+
+            return  true;
+          }else {
+            customerPhoneMessage.innerHTML = "";
+          }
+
+          if(customerAddress.length === 0) {
+            customerAddressMessage.innerHTML = "Please enter address";
+            return  true;
+          }else {
+            customerAddressMessage.innerHTML = "";
+          }
+
+          return false;
+      }
+
+
+      function getPassengerInfo() {
+        const passsengers = [];
+        const group = document.querySelectorAll(".group-age");
+        const fullName = document.querySelectorAll(".passenger-name");
+        const gender = document.querySelectorAll(".passenger-gender");
+        const dob = document.querySelectorAll(".passenger-dob");
+
+        const fullnameValid = document.querySelectorAll(".fullname-valid")
+
+        for (let i = 0; i < group.length; i++) {
+            var passenger = {groupAge: "", fullName: "", gender: "", dob: ""}
+            passenger.groupAge = group[i].value;
+
+            if(fullName[i].value.length === 0) {
+              fullnameValid[i].innerHTML = "Please enter full name";
+              return;
+            }else {
+              fullnameValid[i].innerHTML = "";
+              passenger.fullName = fullName[i].value;
+            }
+
+            passenger.gender = gender[i].value;
+            passenger.dob = dob[i].value;
+
+            passsengers[i] = passenger;
+        }
+
+        return passsengers;
+      }
+
+
+      function bookingNow() {
+        const customer = {fullName: "", email: "", phoneNumber: "", address: ""}
+        const bookingInfo = {paymentMethod: "", totalPayment: ""};
+
+        const tourId = document.getElementById("tourId");
+        const customerName =  document.getElementById("customerName");
+        const customerEmail =  document.getElementById("customerEmail");
+        const customerPhone =  document.getElementById("customerPhone");
+        const customerAddress = document.getElementById("customerAddress");
+        const payment =  document.querySelectorAll(".form-check-input");
+        const snackbarPayment = document.getElementById("snackbar-payment");
+
+        let customerNameValue = customerName.value;
+        let customerEmailValue = customerEmail.value;
+        let customerPhoneValue = customerPhone.value;
+        let customerAddressValue = customerAddress.value;
+
+        if(!validateCustomerInfo(customerNameValue, customerEmailValue, customerPhoneValue, customerAddressValue)) {
+          customer.fullName = customerName.value;
+          customer.email = customerEmail.value;
+          customer.phoneNumber = customerPhone.value;
+          customer.address = customerAddress.value;
+        }
+
+        const passengers =  getPassengerInfo();
+
+        let paymentValue = "";
+
+        let flag = true;
+
+
+        for (let i = 0; i < payment.length; i++) {
+            if(payment[i].checked) {
+              snackbarPayment.classList.remove("show")
+              paymentValue = payment[i].value;
+              flag = false;
+              break;
+            }
+        }
+
+        if(flag) {
+          snackbarPayment.classList.add("show")
+          return;
+        }
+
+        const totalPayment = document.getElementById("totalPayment");
+        let totalPaymentValues = totalPayment.value;
+
+
+
+        bookingInfo.paymentMethod = paymentValue;
+        bookingInfo.totalPayment = totalPaymentValues;
+
+        let tourValue = tourId.value;
+
+        console.log(customer)
+        const data = {
+          tourId: tourValue,
+          booking: bookingInfo,
+          customerData: customer,
+          passengerList: passsengers,
+        }
+
+        console.log(data)
+
+        $.ajax({
+          type: 'POST',
+          url: 'http://localhost:8080/booking-detail/processBooking',
+          data: JSON.stringify(data),
+          contentType: 'application/json',
+        }).done((data) => {
+          console.log(data)
+            location.href = `/tour/payment?tourId=${data.tourId}&bookingId=${data.bookingId}&customerId=${data.customerId}`
+        }).fail((err) => {
+          console.error((err))
+        })
+
+      }
+
+
+    </script>
+  </body>
+</html>

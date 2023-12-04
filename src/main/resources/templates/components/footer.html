@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--CSS-->
+    <link th:replace="components/common-library :: index-css"/>
+
+    <!-- Bootstrap 5-->
+    <link rel="stylesheet" th:replace="components/common-library :: bootstrap-5">
+    <script th:replace="components/common-library.html :: bootstrap-5-bundel"></script>
+
+    <!-- gg fonts icons -->
+    <link th:replace="components/common-library :: google-font"/>
+
+    <!--Font Awesome-->
+    <link th:replace="components/common-library :: font-awesome-5-15-1"/>
+
+
+    <!--  jQuery, Moment.js and Date Range Picker's files -->
+    <script
+            type="text/javascript"
+            src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"
+    ></script>
+
+    <script type="text/javascript"
+            src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js">
+    </script>
+    <script type="text/javascript"
+            src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js">
+    </script>
+    <link rel="stylesheet"
+          type="text/css"
+          href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
+</head>
+<body>
+<footer layout:fragment="footer" class="footer text-secondary border-top">
+    <div class="d-flex flex-column justify-content-center text-center py-3">
+        <h4>Connect with us through social networks:</h4>
+        <div class="socials d-flex justify-content-center pb-4">
+            <div class="social-icons-wrapper d-flex flex-row">
+                <div class="icon facebook">
+                    <a
+                            class="nav-link"
+                            href="https://www.facebook.com/not.hiepdinh/"
+                            target="_blank"
+                    >
+                        <i class="fab fa-facebook-f"></i>
+                        <span class="tooltip">Facebook</span>
+                    </a>
+                </div>
+                <div class="icon github">
+                    <a
+                            class="nav-link"
+                            href="https://github.com/hd288"
+                            target="_blank"
+                    >
+                        <i class="fab fa-github"></i>
+                        <span class="tooltip">Github</span>
+                    </a>
+                </div>
+                <div class="icon twitter">
+                    <a
+                            class="nav-link"
+                            href="https://twitter.com/hiepdinhh"
+                            target="_blank"
+                    ><i class="fab fa-twitter"></i>
+                        <span class="tooltip">Twitter</span></a
+                    >
+                </div>
+                <div class="icon instagram">
+                    <a
+                            class="nav-link"
+                            href="https://www.instagram.com/hiep.dx_"
+                            target="_blank"
+                    ><i class="fab fa-instagram"></i>
+                        <span class="tooltip">Instagram</span></a
+                    >
+                </div>
+                <div class="icon youtube">
+                    <a
+                            class="nav-link"
+                            href="https://www.youtube.com/"
+                            target="_blank"
+                    ><i class="fab fa-youtube"></i>
+                        <span class="tooltip">Youtube</span></a
+                    >
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="container d-flex flex-row justify-content-center gap-3">
+            <div
+                    class="footer-col d-flex flex-column justify-content-start text-center"
+            >
+                <h4>Our Missions:</h4>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad magni
+                    obcaecati dolor commodi incidunt fuga, vero minus. Quas, neque,
+                    soluta exercitationem quasi numquam perspiciatis sit placeat
+                    voluptatem autem dignissimos provident!
+                </p>
+            </div>
+            <div
+                    class="container footer-col d-flex flex-column justify-content-start text-center"
+            >
+                <h4>Company</h4>
+                <div class="container d-flex flex-column">
+                    <p class="nav-item">
+                        <a href="#">About us</a>
+                    </p>
+                    <p class="nav-item">
+                        <a href="#">Our services</a>
+                    </p>
+                    <p class="nav-item">
+                        <a href="#">Privacy policy</a>
+                    </p>
+                    <p class="nav-item">
+                        <a href="#">Affiliate program</a>
+                    </p>
+                </div>
+            </div>
+            <div
+                    class="container footer-col d-flex flex-column justify-content-start text-center"
+            >
+                <h4>Get help</h4>
+                <div>
+                    <p class="nav-item"><a href="#">FAQ</a></p>
+                    <p class="nav-item">
+                        <a href="#">Shipping</a>
+                    </p>
+                    <p class="nav-item"><a href="#">Returns</a></p>
+                    <p class="nav-item">
+                        <a href="#">Payment options</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
