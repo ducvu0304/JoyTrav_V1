@@ -1,9 +1,6 @@
 package com.JoyTrav.service.impl;
 
-import com.JoyTrav.dto.OfferTour;
-import com.JoyTrav.dto.Pagination;
-import com.JoyTrav.dto.TourDTO;
-import com.JoyTrav.dto.TourDetail;
+import com.JoyTrav.dto.*;
 import com.JoyTrav.model.Picture;
 import com.JoyTrav.model.Tour;
 import com.JoyTrav.repository.TourRepository;
@@ -22,6 +19,7 @@ import java.util.stream.IntStream;
 
 @Service
 public class TourServiceImpl implements TourService {
+
     @Autowired
     private TourRepository touRepository;
     @Autowired
@@ -31,7 +29,8 @@ public class TourServiceImpl implements TourService {
 
     @Override
     public List<Tour> fetchALl() {
-        return null;
+
+        return touRepository.findAll();
     }
 
     @Override
@@ -81,23 +80,98 @@ public class TourServiceImpl implements TourService {
     }
 
     @Override
-    public Pagination<Tour> findPage(int page) {
-        Pagination<Tour> pagination = new Pagination<>();
-        pagination.setCurrentPage(page);
-        pagination.setPageSIze(5);
+    public List<Tour> findPage(int page, List<Tour> tours) {
 
-        int totalPage = Math.round(touRepository.findAll().size()/ pagination.getPageSIze());
-        pagination.setTotalPage(totalPage);
+        List<Tour> list =  new ArrayList<>();
 
-        int offset = (page-1) * pagination.getPageSIze();
+        System.out.println(tours.size());
 
-        pagination.setList(touRepository.findTourPage(pagination.getPageSIze(), offset));
+        int end = page * 5;
+        int start = end - 5;
 
-        if(pagination.getTotalPage() > 0) {
-            pagination.setPageNumbers(generator.pageNumbers(totalPage));
+        if(end < tours.size()) {
+            for (int i = start; i < end; i++) {
+                list.add(tours.get(i));
+            }
+
+        }else {
+            start = tours.size() - 5;
+
+            for (int i = start; i < tours.size() ; i++) {
+                list.add(tours.get(i));
+            }
         }
 
-        return pagination;
+        tours.forEach(tour -> tour.getTitle());
+
+        return list;
+    }
+
+    @Override
+    public List<Tour> getTourByType(String type) {
+        if(type.equals("Domestic")) {
+            return touRepository.findAll().stream().filter(tour -> tour.getTypeId().equals("DOMES")).collect(Collectors.toList());
+        }
+
+        return touRepository.findAll().stream().filter(tour -> tour.getTypeId().equals("INTER")).collect(Collectors.toList());
+    }
+
+    @Override
+    public Tour searchTour(SearchObj searchObj) {
+        if(!searchObj.getDestination().isEmpty()) {
+            return touRepository.findAll()
+                    .stream()
+                    .filter(tour -> tour.getDestination()
+                            .contains(searchObj.getDestination())).findFirst().get();
+        }
+
+        if(searchObj.getTypeTour().equals("domestic")) {
+            switch (searchObj.getCategory()) {
+                case "health" :
+                    return touRepository.findAll().stream().filter(tour ->
+                        tour.getTypeId().equals("DOMES") && tour.getCategory().equals("Heath")
+                    ).findFirst().get();
+                case "cultural" :
+                    return touRepository.findAll().stream().filter(tour ->
+                            tour.getTypeId().equals("DOMES") && tour.getCategory().equals("Cultural")
+                    ).findFirst().get();
+                case "religious" :
+                    return touRepository.findAll().stream().filter(tour ->
+                            tour.getTypeId().equals("DOMES") && tour.getCategory().equals("Religious")
+                    ).findFirst().get();
+                case "sport" :
+                    return touRepository.findAll().stream().filter(tour ->
+                            tour.getTypeId().equals("DOMES") && tour.getCategory().equals("Sport")
+                    ).findFirst().get();
+                default:
+                    return touRepository.findAll().stream().filter(tour ->
+                            tour.getTypeId().equals("DOMES")
+                    ).findFirst() .get();
+            }
+        }else  {
+            switch (searchObj.getCategory()) {
+                case "health" :
+                    return touRepository.findAll().stream().filter(tour ->
+                            tour.getTypeId().equals("INTER") && tour.getCategory().equals("Heath")
+                    ).findFirst().get();
+                case "cultural" :
+                    return touRepository.findAll().stream().filter(tour ->
+                            tour.getTypeId().equals("INTER") && tour.getCategory().equals("Cultural")
+                    ).findFirst().get();
+                case "religious" :
+                    return touRepository.findAll().stream().filter(tour ->
+                            tour.getTypeId().equals("INTER") && tour.getCategory().equals("Religious")
+                    ).findFirst().get();
+                case "sport" :
+                    return touRepository.findAll().stream().filter(tour ->
+                            tour.getTypeId().equals("INTER") && tour.getCategory().equals("Sport")
+                    ).findFirst().get();
+                default:
+                    return touRepository.findAll().stream().filter(tour ->
+                            tour.getTypeId().equals("INTER")
+                    ).findFirst() .get();
+            }
+        }
     }
 
     @Override
@@ -141,6 +215,8 @@ public class TourServiceImpl implements TourService {
 
         return tourDetail;
     }
+
+
 
     @Override
     public Optional<Tour> getById(String tourID) {

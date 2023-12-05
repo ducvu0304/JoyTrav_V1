@@ -50,8 +50,13 @@
 
 </head>
 <body>
-<header class="pt-2">
-<!--    <nav layout:replace="components/header :: header"></nav>-->
+<header class="pt-2"  th:if="${session.isLogin == false}">
+    <nav layout:replace="components/header :: header" ></nav>
+<!--    <nav layout:replace="components/header :: login-header"></nav>-->
+</header>
+
+<header class="pt-2" th:if="${session.isLogin == true}">
+    <!--    <nav layout:replace="components/header :: header"></nav>-->
     <nav layout:replace="components/header :: login-header"></nav>
 </header>
 
@@ -95,7 +100,7 @@
         </button>
     </div>
 
-    <form>
+    <div>
         <div class="d-flex flex-row container position-absolute w-75 py-5" id="homeSearchForm">
             <!-- form contents sẽ được render ở đây -->
             <div class="container d-flex flex-column gap-3 h-100 w-100">
@@ -169,7 +174,7 @@
             </div>
 
         </div>
-    </form>
+    </div>
     <!-- 1 -->
 </div>
 <!-- carousel end -->

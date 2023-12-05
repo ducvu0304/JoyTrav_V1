@@ -8,6 +8,7 @@ document.getElementById("btn-account").addEventListener("click",
 
 /*******************************8*************************************************/
 const formContainer = document.getElementById("homeSearchForm");
+
 function clearButtonStyles() {
     let buttons = document.querySelectorAll(".home-carousel-button");
 
@@ -32,6 +33,7 @@ function initializeDateRangePicker() {
         }
     );
 }
+
 initializeDateRangePicker();
 
 function handleHotelButtonClick() {
@@ -57,6 +59,7 @@ function handleHotelButtonClick() {
               </span>
             </span>
             <input
+             
               type="number"
               class="form-control"
               placeholder="Min price"
@@ -210,7 +213,8 @@ function handleTourButtonClick() {
             />
           </div>
 
-          <button id="searchBtn" class="btn btn-danger w-75 d-flex align-items-center justify-content-center" >
+          <button onclick="search()" id="searchBtn" 
+            class="btn btn-danger w-75 d-flex align-items-center justify-content-center" >
             Search &nbsp;
             <span class="material-symbols-outlined"> travel_explore </span>
           </button>
@@ -306,7 +310,62 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
+function search() {
+    const searchObj = {
+        destination: "",
+        minPrice: "",
+        maxPrice: "",
+        typeTour: "",
+        category: "",
+    }
 
+    const destination = document.getElementById("destination")
+    const minPrice = document.getElementById("minPrice")
+    const maxPrice = document.getElementById("maxPrice")
+    const typeTour = document.getElementById("typeTour")
+    const category = document.getElementById("category")
+
+    searchObj.destination = destination.value;
+    searchObj.minPrice = minPrice.value;
+    searchObj.maxPrice = maxPrice.value;
+    searchObj.typeTour = typeTour.value;
+    searchObj.category = category.value;
+
+
+    // fetch('http://localhost:8080/tour/search', {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify(searchObj)
+    // })
+    //     .then(response => {
+    //         if (!response.ok) {
+    //             throw new Error('Network response was not ok');
+    //         }
+    //         return response.json(); // Parse the response as JSON
+    //     })
+    //     .then(data => {
+    //         console.log(data); // Access the value of the 'data' response
+    //         // location.href = `/tour/tourName=${data.getId}`;
+    //     })
+    //     .catch(error => {
+    //         console.error('Fetch error:', error);
+    //     });
+
+    $.ajax({
+        type: 'POST',
+        url: 'http://localhost:8080/tour/search',
+        data: JSON.stringify(searchObj),
+        contentType: 'application/json',
+    }).done((response) => {
+
+
+        location.href = `/tour/tourName=${response}`
+    }).fail((err) => {
+        console.error((err))
+    })
+}
 
 
 

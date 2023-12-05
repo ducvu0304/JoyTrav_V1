@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"  xmlns="http://www.w3.org/1999/xhtml"  xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JoyTrav</title>
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+            crossorigin="anonymous"
+    />
+    <link href="/your-path-to-uicons/css/uicons-rounded-regular.css" rel="stylesheet">
+    <link href="/your-path-to-uicons/css/uicons-rounded-bold.css" rel="stylesheet">
+    <link href="/your-path-to-uicons/css/uicons-rounded-solid.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+<main class="container-fluid" >
+    <section class="row" >
+        <!-- Side bar -->
+        <div class="col-2">
+            <div class="logo ms-4 mt-3">
+                <img src="/images/logo.png" alt="" class="w-100">
+            </div>
+            <div class="mt-4">
+                <ul class="sidebar-list">
+                    <li class="sidebar-item">
+                        <img src="/icons/home-button.png" alt="Revenue" class="sidebar-icon">
+                        <p class="sidebar-title" >Dashboard</p>
+                    </li>
+                    <li class="sidebar-item">
+                        <img src="/icons/travel.png" alt="Revenue" class="sidebar-icon">
+                        <p class="sidebar-title" >Tour</p>
+                    </li>
+                    <li class="sidebar-item">
+                        <img src="/icons/hotel.png" alt="Revenue" class="sidebar-icon">
+                        <p class="sidebar-title" >Hotel</p>
+                    </li>
+                    <li class="sidebar-item">
+                        <img src="/icons/chart.png" alt="Revenue" class="sidebar-icon">
+                        <p class="sidebar-title" >Charts</p>
+                    </li>
+                    <li class="sidebar-item">
+                        <img src="/icons/revenue.png" alt="Revenue" class="sidebar-icon">
+                        <p class="sidebar-title" >Revenue</p>
+                    </li>
+                    <li class="sidebar-item">
+                        <img src="/icons/total-client.png" alt="Revenue" class="sidebar-icon">
+                        <p class="sidebar-title" >Account</p>
+                    </li>
+                    <li class="sidebar-item">
+                        <img src="/icons/comment.png" alt="Comment" class="sidebar-icon">
+                        <p class="sidebar-title">Comment</p>
+                    </li>
+                    <li class="sidebar-item">About</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Main-->
+        <div class="col-10 main-container">
+            <!-- Header -->
+            <div class="header">
+                <!-- Search-->
+                <div class="search" >
+                    <div class="search-input-wrapper">
+                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                        <input type="text" placeholder="Search" class="search-input" />
+                    </div>
+                </div>
+                <!--Header-Right-->
+                <div class="header-right">
+                    <div class="header-right-wrapper">
+                        <!-- <i class="fa-solid fa-moon"></i>
+                        <i class="fa-solid fa-bell"></i> -->
+                        <i class="fa-solid fa-user-tie"></i>
+                        <a th:href="@{/processLogout}">Logout</a>
+                    </div>
+                </div>
+            </div>
+            <!-- End Header -->
+
+            <!-- Body -->
+            <div class="page-body py-4">
+                <!-- Heading -->
+                <h2 class="mb-4">Dashboard</h2>
+
+                <!--Statistics -->
+                <div class="statistics">
+                    <ul class="statistics-list">
+                        <li class="statistics-item-wrapper">
+                            <div class="statistics-item">
+                                <img src="icons/total-client.png" alt="Account" class="statistics-icon">
+                                <div>
+                                    <span>Total Account</span><br>
+                                    <span>6389</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="statistics-item-wrapper">
+                            <div class="statistics-item">
+                                <img src="icons/revenue.png" alt="Revenue" class="statistics-icon">
+                                <div>
+                                    <span>Revenue</span><br>
+                                    <span>6389</span>
+                                </div>
+
+                            </div>
+                        </li>
+                        <li class="statistics-item-wrapper">
+                            <div class="statistics-item">
+                                <img src="icons/cart.png" alt="cart" class="statistics-icon">
+                                <div>
+                                    <span>New bookings</span><br>
+                                    <span>6389</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="statistics-item-wrapper">
+                            <div class="statistics-item">
+                                <img src="icons/pending-contact.png" alt="pending-contact" class="statistics-icon">
+                                <div>
+                                    <span>Pending contacts </span> <br>
+                                    <span>35 </span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Search and filter -->
+                <div class="search-filter mb-2">
+                    <div class="search-name">
+                        <input class="inpt--medium"  type="text" placeholder="Input name">
+                        <button class="btn--medium btn--medium-search">Search</button>
+                    </div>
+                    <div></div>
+                </div>
+                <!-- Table -->
+                <div class="info-container">
+                    <table class="table-info mb-4">
+                        <thead>
+                        <tr class="table-row table-row--header">
+                            <th >STT</th>
+                            <th class="table-col table-col--first">CLIENT</th>
+                            <th>EMAIL</th>
+                            <th>PHONE</th>
+                            <th>BIRTHDAY</th>
+                            <th >STATUS</th>
+                            <th>CREATE DATE</th>
+                            <th colspan="col">
+                                ACTION
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="table-row">
+                            <td class="tbl-stt">1</td>
+                            <td class="table-col table-col--first">
+                                <div class="user-info">
+                                    <p class="user-name">Full name</p>
+                                </div>
+                            </td>
+                            <td>ducvu@gmail.com</td>
+                            <td>0966666666</td>
+                            <td>6/10/2020</td>
+                            <td><span class="user-status user-status--active">Active</span></td>
+                            <td>6/10/2020</td>
+                            <td>
+                                <i class="fa-solid fa-pen btn--edit"></i>
+                                <span class="btn--view ms-2">View</span>
+                            </td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="tbl-stt">1</td>
+                            <td class="table-col table-col--first">
+                                <div class="user-info">
+                                    <p class="user-name">Vũ Văn Đức</p>
+                                </div>
+                            </td>
+                            <td>ducvu@gmail.com</td>
+                            <td>0966666666</td>
+                            <td>6/10/2020</td>
+                            <td>
+                                <span class="user-status user-status--block">Block</span>
+                                <!-- <span class="user-status user-status--active">Active</span> -->
+                            </td>
+                            <td>6/10/2020</td>
+                            <td>
+                                <button class="btn--small btn--active">Active</button>
+                                <button class="btn--small btn--view ms-2">View</button>
+                            </td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="tbl-stt">1</td>
+                            <td class="table-col table-col--first">
+                                <div class="user-info">
+                                    <p class="user-name">Vũ Văn Đức</p>
+                                </div>
+                            </td>
+                            <td>ducvu@gmail.com</td>
+                            <td>0966666666</td>
+                            <td>6/10/2020</td>
+                            <td><span class="user-status user-status--active">Active</span></td>
+                            <td>6/10/2020</td>
+                            <td>
+                                <button class="btn--small btn--block">Block</button>
+                                <button class="btn--small btn--view ms-2">View</button>
+                            </td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="tbl-stt">1</td>
+                            <td class="table-col table-col--first">
+                                <div class="user-info">
+                                    <p class="user-name">Vũ Văn Đức</p>
+                                </div>
+                            </td>
+                            <td>ducvu@gmail.com</td>
+                            <td>0966666666</td>
+                            <td>6/10/2020</td>
+                            <td><span class="user-status user-status--active">Active</span></td>
+                            <td>6/10/2020</td>
+                            <td>
+                                <i class="fa-solid fa-pen btn--edit"></i>
+                                <span class="btn--view ms-2">View</span>
+                            </td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="tbl-stt">1</td>
+                            <td class="table-col table-col--first">
+                                <div class="user-info">
+                                    <p class="user-name">Vũ Văn Đức</p>
+                                </div>
+                            </td>
+                            <td>ducvu@gmail.com</td>
+                            <td>0966666666</td>
+                            <td>6/10/2020</td>
+                            <td><span class="user-status user-status--active">Active</span></td>
+                            <td>6/10/2020</td>
+                            <td>
+                                <i class="fa-solid fa-pen btn--edit"></i>
+                                <span class="btn--view ms-2">View</span>
+                            </td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="tbl-stt">1</td>
+                            <td class="table-col table-col--first">
+                                <div class="user-info">
+                                    <p class="user-name">Vũ Văn Đức</p>
+                                </div>
+                            </td>
+                            <td>ducvu@gmail.com</td>
+                            <td>0966666666</td>
+                            <td>6/10/2020</td>
+                            <td><span class="user-status user-status--active">Active</span></td>
+                            <td>6/10/2020</td>
+                            <td>
+                                <i class="fa-solid fa-pen btn--edit"></i>
+                                <span class="btn--view ms-2">View</span>
+                            </td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="tbl-stt">1</td>
+                            <td class="table-col table-col--first">
+                                <div class="user-info">
+                                    <p class="user-name">Vũ Văn Đức</p>
+                                </div>
+                            </td>
+                            <td>ducvu@gmail.com</td>
+                            <td>0966666666</td>
+                            <td>6/10/2020</td>
+                            <td><span class="user-status user-status--active">Active</span></td>
+                            <td>6/10/2020</td>
+                            <td>
+                                <i class="fa-solid fa-pen btn--edit"></i>
+                                <span class="btn--view ms-2">View</span>
+                            </td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="tbl-stt">1</td>
+                            <td class="table-col table-col--first">
+                                <div class="user-info">
+                                    <p class="user-name">Vũ Văn Đức</p>
+                                </div>
+                            </td>
+                            <td>ducvu@gmail.com</td>
+                            <td>0966666666</td>
+                            <td>6/10/2020</td>
+                            <td><span class="user-status user-status--active">Active</span></td>
+                            <td>6/10/2020</td>
+                            <td>
+                                <i class="fa-solid fa-pen btn--edit"></i>
+                                <span class="btn--view ms-2">View</span>
+                            </td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="tbl-stt">1</td>
+                            <td class="table-col table-col--first">
+                                <div class="user-info">
+                                    <p class="user-name">Vũ Văn Đức</p>
+                                </div>
+                            </td>
+                            <td>ducvu@gmail.com</td>
+                            <td>0966666666</td>
+                            <td>6/10/2020</td>
+                            <td><span class="user-status user-status--active">Active</span></td>
+                            <td>6/10/2020</td>
+                            <td>
+                                <i class="fa-solid fa-pen btn--edit"></i>
+                                <span class="btn--view ms-2">View</span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="d-flex justify-content-end">
+                        <nav aria-label="...">
+                            <ul class="pagination">
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#" tabindex="-1">Previous</a>
+                                </li>
+                                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item active">
+                                    <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
+                                </li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">Next</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+
+
+                    <!-- <table class="table-info">
+                        <thead>
+                            <tr class="table-row table-row--header">
+                                <th class="table-col table-col--first">CLIENT</th>
+                                <th>AMOUNT</th>
+                                <th>STATUS</th>
+                                <th>DATE</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="table-row">
+                                <td class="table-col table-col--first">
+                                    <div class="user-info">
+                                        <img class="user-avatar"
+                                        src="https://hips.hearstapps.com/hmg-prod/images/avatar-the-way-of-water-1652105582.jpg?crop=0.825xw:1.00xh;0,0&resize=1200:*  "
+                                        alt="avatar">
+                                       <p class="user-name">Full name</p>
+                                    </div>
+                                </td>
+                                <td>$ 863.45</td>
+                                <td>Approved</td>
+                                <td>6/10/2020</td>
+                            </tr>
+                            <tr class="table-row">
+                                <td class="table-col table-col--first">
+                                    <div class="user-info">
+                                        <img class="user-avatar"
+                                        src="https://hips.hearstapps.com/hmg-prod/images/avatar-the-way-of-water-1652105582.jpg?crop=0.825xw:1.00xh;0,0&resize=1200:*  "
+                                        alt="avatar">
+                                       <p class="user-name">Full name</p>
+                                    </div>
+                                </td>
+                                <td>$ 863.45</td>
+                                <td>Approved</td>
+                                <td>6/10/2020</td>
+                            </tr>
+                            <tr class="table-row">
+                                <td class="table-col table-col--first">
+                                    <div class="user-info">
+                                        <img class="user-avatar"
+                                        src="https://hips.hearstapps.com/hmg-prod/images/avatar-the-way-of-water-1652105582.jpg?crop=0.825xw:1.00xh;0,0&resize=1200:*  "
+                                        alt="avatar">
+                                       <p class="user-name">Full name</p>
+                                    </div>
+                                </td>
+                                <td>$ 863.45</td>
+                                <td>Approved</td>
+                                <td>6/10/2020</td>
+                            </tr>
+                            <tr class="table-row">
+                                <td class="table-col table-col--first">
+                                    <div class="user-info">
+                                        <img class="user-avatar"
+                                        src="https://hips.hearstapps.com/hmg-prod/images/avatar-the-way-of-water-1652105582.jpg?crop=0.825xw:1.00xh;0,0&resize=1200:*  "
+                                        alt="avatar">
+                                       <p class="user-name">Full name</p>
+                                    </div>
+                                </td>
+                                <td>$ 863.45</td>
+                                <td>Approved</td>
+                                <td>6/10/2020</td>
+                            </tr>
+                            <tr class="table-row">
+                                <td class="table-col table-col--first">
+                                    <div class="user-info">
+                                        <img class="user-avatar"
+                                        src="https://hips.hearstapps.com/hmg-prod/images/avatar-the-way-of-water-1652105582.jpg?crop=0.825xw:1.00xh;0,0&resize=1200:*  "
+                                        alt="avatar">
+                                       <p class="user-name">Full name</p>
+                                    </div>
+                                </td>
+                                <td>$ 863.45</td>
+                                <td>Approved</td>
+                                <td>6/10/2020</td>
+                            </tr>     <tr class="table-row">
+                                <td class="table-col table-col--first">
+                                    <div class="user-info">
+                                        <img class="user-avatar"
+                                        src="https://hips.hearstapps.com/hmg-prod/images/avatar-the-way-of-water-1652105582.jpg?crop=0.825xw:1.00xh;0,0&resize=1200:*  "
+                                        alt="avatar">
+                                       <p class="user-name">Full name</p>
+                                    </div>
+                                </td>
+                                <td>$ 863.45</td>
+                                <td>Approved</td>
+                                <td>6/10/2020</td>
+                            </tr>
+                            <tr class="table-row">
+                                <td class="table-col table-col--first">
+                                    <div class="user-info">
+                                        <img class="user-avatar"
+                                        src="https://hips.hearstapps.com/hmg-prod/images/avatar-the-way-of-water-1652105582.jpg?crop=0.825xw:1.00xh;0,0&resize=1200:*  "
+                                        alt="avatar">
+                                       <p class="user-name">Full name</p>
+                                    </div>
+                                </td>
+                                <td>$ 863.45</td>
+                                <td>Approved</td>
+                                <td>6/10/2020</td>
+                            </tr>
+                        </tbody>
+                    </table> -->
+
+                </div>
+                <!-- Chart -->
+                <div>
+                    <!-- Chart 1 -->
+                    <div></div>
+                    <!-- Chart 2 -->
+                    <div>
+
+                    </div>
+                </div>
+            </div>
+            <!--End Body -->
+        </div>
+    </section>
+</main>
+<script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"
+></script>
+</body>
+</html>

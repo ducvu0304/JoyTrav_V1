@@ -44,7 +44,15 @@
 </head>
 <body>
 <!-- header -->
-<nav layout:replace ="components/header.html :: header"></nav>
+<header class="pt-2"  th:if="${session.isLogin == false}">
+    <nav layout:replace="components/header :: header" ></nav>
+    <!--    <nav layout:replace="components/header :: login-header"></nav>-->
+</header>
+
+<header class="pt-2" th:if="${session.isLogin == true}">
+    <!--    <nav layout:replace="components/header :: header"></nav>-->
+    <nav layout:replace="components/header :: login-header"></nav>
+</header>
 <!--<nav class="navbar navbar-expand-lg navbar-light bg-light d-flex justify-content-center">-->
 <!--    <div class="container w-100 d-flex justify-content-center">-->
 <!--        <img th:href="@{/home}" src="/images/logo.png" class="w-25" alt="Logo"/>-->
@@ -155,7 +163,7 @@
                 </span>
               </span>
                     <select class="form-select">
-                        <option value="domestic" selected>Domestic</option>
+                        <option value="domestic" selected>  Domestic</option>
                         <option value="international">International</option>
                     </select>
                 </div>
@@ -212,12 +220,12 @@
     <div id="tourFilterBox"
          class="container w-25 d-flex flex-column justify-content-start">
         <div class="container w-100 px-0 pb-4 d-flex flex-row gap-2">
-            <button type="button" class="btn btn-outline-danger w-50 d-flex justify-content-center align-items-center">
+            <a th:href="@{/tour/type=Domestic}" class="btn btn-outline-danger w-50 d-flex justify-content-center align-items-center">
                 Domestic Tours
-            </button>
-            <button type="button" class="btn btn-outline-danger w-50 d-flex justify-content-center align-items-center">
+            </a>
+            <a th:href="@{/tour/type=Internation}" class="btn btn-outline-danger w-50 d-flex justify-content-center align-items-center">
                 International Tours
-            </button>
+            </a>
         </div>
         <input type="text"
                placeholder="Enter your destination"
@@ -527,8 +535,6 @@
                        th:text="${pageNumber}">
                     </a>
                 </li>
-<!--                <li class="page-item active"><a class="page-link" th:href="@{/tour/page=2}">2</a></li>-->
-<!--                <li class="page-item"><a class="page-link" th:href="@{/tour/page=3}">3</a></li>-->
                 <li class="page-item"><a class="page-link" th:href="@{/tour/page=1}">Next</a></li>
             </ul>
         </div>

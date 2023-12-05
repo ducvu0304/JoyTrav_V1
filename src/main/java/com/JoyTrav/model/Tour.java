@@ -42,7 +42,7 @@ public class Tour implements Serializable {
 
     @OneToMany(mappedBy = "tour")
     private List<Hotel> hotels;
-    @OneToMany(mappedBy = "tour")
+    @OneToMany(mappedBy = "tour", fetch = FetchType.EAGER)
     private List<Picture> pictureList;
     @OneToMany(mappedBy = "tour")
     private List<Schedule> schedules;

@@ -65,7 +65,15 @@
 
   </head>
   <body>
-  <nav layout:replace="~{components/header.html :: header}"></nav>
+  <header class="pt-2"  th:if="${session.isLogin == false}">
+    <nav layout:replace="components/header :: header" ></nav>
+    <!--    <nav layout:replace="components/header :: login-header"></nav>-->
+  </header>
+
+  <header class="pt-2" th:if="${session.isLogin == true}">
+    <!--    <nav layout:replace="components/header :: header"></nav>-->
+    <nav layout:replace="components/header :: login-header"></nav>
+  </header>
   <hr>
     <!-- body -->
 
@@ -74,12 +82,12 @@
       <!-- box 1 -->
       <div class="container p-0 w-50 d-flex flex-column text-secondary p-4 border border-secondary rounded" style="max-height: 1000px;">
         <h5 class="text-primary text-center">Booking Summary</h5>
-        <img th:src="${tour.getPictureList().get(0).getLink()}" class="w-100 mb-3" alt="ảnh minh họa" />
+        <img th:src="${tour.getImages().get(0).getLink()}" class="w-100 mb-3" alt="ảnh minh họa" />
         <h6 class="text-danger d-flex align-items-center">
           <span class="material-symbols-outlined px-2">
             confirmation_number
           </span>
-          Tour ID:  <input class="text-danger input-disable input-tour-id" disabled id="tourId" th:value="${tour.getId()}"/>
+          Tour ID:  <input class="text-danger input-disable input-tour-id" disabled id="tourId" th:value="${tour.getTourId()}"/>
         </h6>
         <h5 class="text-start text-dark" th:text="${tour.getTitle()}">
           Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.
@@ -96,7 +104,7 @@
             name="displaySelectedDate"
             class="form-control w-50 text-center fw-light"
             type="text"
-            th:value="${tour.getDepartureDate()}"
+            th:value="${tour.getDepartDate()}"
           />
         </h6>
 
@@ -120,7 +128,8 @@
               Adults:
               <span id="adults-total">
                 <input id="adultsNumber" class="input-disable input-count" type="text" value="0" disabled> x
-                <input id="adultsPrice" class="input-disable input-price"  type="text" th:value="${tour.getPrice()*0.7}" disabled>$
+                <input th:if="${tour.getSale() != 0}" id="adultsPrice" class="input-disable input-price"  type="text" th:value="${tour.getPrice()*tour.getSale()}" disabled>$
+                <input th:if="${tour.getSale() == 0}" id="adultsPrice" class="input-disable input-price"  type="text" th:value="${tour.getPrice()}" disabled>$
               </span>
             </li>
             <li
@@ -129,7 +138,8 @@
               Children:
               <span id="children-total">
                 <input id="childrenNumber" class="input-disable input-count" type="text" value="0" disabled> x
-                <input id="childrenPrice" class="input-disable input-price"  type="text" th:value="${tour.getPrice()*0.7*0.8}" disabled>$
+                <input th:if="${tour.getSale()} != 0" id="childrenPrice" class="input-disable input-price"  type="text" th:value="${tour.getPrice()*tour.getSale()*0.8}" disabled>$
+                <input th:if="${tour.getSale()} == 0" id="childrenPrice" class="input-disable input-price"  type="text" th:value="${tour.getPrice()*0.8}" disabled>$
               </span>
             </li>
             <li
@@ -938,21 +948,20 @@
         let totalPaymentValues = totalPayment.value;
 
 
-
         bookingInfo.paymentMethod = paymentValue;
         bookingInfo.totalPayment = totalPaymentValues;
 
         let tourValue = tourId.value;
 
-        console.log(customer)
+
         const data = {
           tourId: tourValue,
           booking: bookingInfo,
           customerData: customer,
-          passengerList: passsengers,
+          passengerList: passengers,
         }
 
-        console.log(data)
+
 
         $.ajax({
           type: 'POST',

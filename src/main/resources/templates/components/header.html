@@ -125,9 +125,9 @@
                     <span class="material-symbols-outlined"> account_circle </span>
                 </button>
                 <ul id="account-menu" class="menu-dropdown " >
-                    <li><span class="menu-item account-name">Hello, Đức</span></li>
+                    <li><span class="menu-item account-name" th:text="|Hello, ${session.userName}|">Hello, Đức</span></li>
                     <li><a class="menu-item" href="#">Profile</a></li>
-                    <li><a class="menu-item" href="#">Logout</a></li>
+                    <li><a class="menu-item" th:href="@{/processLogout}">Logout</a></li>
                 </ul>
             </div>
         </div>

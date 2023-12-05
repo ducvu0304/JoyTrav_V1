@@ -35,7 +35,7 @@ p {
     border-radius: 8px;
     height: 30px;
     background-color: #fff;
-    color: gray;
+    color: #4a4d50;
 }
 
 .btn--medium-search:hover {
@@ -186,13 +186,21 @@ p {
     color: rgb(220, 49, 49);
 }
 
+
 .header-right-wrapper {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     width: 60%;
 }
 
-/* Body */
+.header-right-wrapper a {
+    cursor: pointer;
+}
+
+
+
+    /* Body */
 .page-body {
     box-shadow: -15px 0px 10px -15px #dddddd;
     padding-left: 20px;
@@ -250,7 +258,6 @@ table, th, td {
 
 .table-row {
     height: 40px;
-    border-bottom: 1px solid #c2b9b9;
 }
 
 .table-row--header {
@@ -292,11 +299,12 @@ table, th, td {
     background-color: rgb(253,232,232);
 }
 
+
+
 /* search-filter */
 .search-filter {
 
 }
-
 .search-btn {
     border: 1px solid rgb(190, 177, 177);
     width: 100px;

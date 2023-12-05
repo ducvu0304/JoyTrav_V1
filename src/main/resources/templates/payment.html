@@ -62,7 +62,15 @@
     <title>JoyTrav</title>
   </head>
   <body>
-  <nav layout:replace="components/header.html :: header"></nav>
+  <header class="pt-2"  th:if="${session.isLogin == false}">
+    <nav layout:replace="components/header :: header" ></nav>
+    <!--    <nav layout:replace="components/header :: login-header"></nav>-->
+  </header>
+
+  <header class="pt-2" th:if="${session.isLogin == true}">
+    <!--    <nav layout:replace="components/header :: header"></nav>-->
+    <nav layout:replace="components/header :: login-header"></nav>
+  </header>
   <hr>
     <!-- body -->
 
@@ -185,19 +193,19 @@
         class="container p-4 w-50 h-100 d-flex flex-column text-secondary border border-danger rounded"
       >
         <h5 class="text-danger text-center">Booking Summary</h5>
-        <img th:src="${bookingSummary.getTourDTO().getImage()}" class="w-100 mb-3" alt="ảnh minh họa" />
+        <img th:src="${bookingSummary.getTourDetail().getImages().get(0).getLink()}" class="w-100 mb-3" alt="ảnh minh họa" />
         <h6 class="text-danger d-flex align-items-center">
           <span class="material-symbols-outlined px-2">
             confirmation_number
           </span>
-          Tour ID: <span th:text="${bookingSummary.getTourDTO().getTourId()}" >09328197135423</span>
+          Tour ID: <span th:text="${bookingSummary.getTourDetail().getTourId()}" >09328197135423</span>
         </h6>
-        <h5 class="text-start text-dark" th:text="${bookingSummary.getTourDTO().getTitle()}" >
+        <h5 class="text-start text-dark" th:text="${bookingSummary.getTourDetail().getTitle()}" >
           Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.
         </h5>
         <h6 class="d-flex justify-content-between">
           Depart From:
-          <span class="fw-light" th:text="${bookingSummary.getTourDTO().getDeparture()}" >Ho Chi Minh City</span>
+          <span class="fw-light" th:text="${bookingSummary.getTourDetail().getDeparture()}" >Ho Chi Minh City</span>
         </h6>
         <h6 class="d-flex gap-4 align-items-center justify-content-between">
           <label >Depart Date:</label>
@@ -232,7 +240,8 @@
               Adults:
               <span id="adults-total">
                 <span th:text="${bookingSummary.getAdultsNumber()}"></span> x
-                <span th:text="${bookingSummary.getTourDTO().getPrice()}">300</span> $
+                <span th:if="${bookingSummary.getTourDetail().getSale() !=0}" th:text="${bookingSummary.getTourDetail().getSale() * bookingSummary.getTourDetail().getPrice()}">300</span> $
+                <span th:if="${bookingSummary.getTourDetail().getSale() == 0}" th:text="${bookingSummary.getTourDetail().getPrice()}">300</span> $
               </span>
             </li>
             <li
@@ -241,7 +250,11 @@
               Children:
               <span id="children-total">
                 <span th:text="${bookingSummary.getChildrenNumber()}"></span> x
-                <span th:text="${bookingSummary.getTourDTO().getPrice()}">300</span> $
+                <span th:if="${bookingSummary.getTourDetail().getSale() != 0}"
+                      th:text="${bookingSummary.getTourDetail().getPrice() * bookingSummary.getTourDetail().getSale() *0.8}">300</span> $
+                 <span th:if="${bookingSummary.getTourDetail().getSale() == 0}"
+                       th:text="${bookingSummary.getTourDetail().getPrice()*0.8}">300</span> $
+
               </span>
             </li>
             <li

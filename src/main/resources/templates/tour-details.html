@@ -132,8 +132,14 @@
   </head>
   <body>
     <!-- header -->
-    <header>
-      <nav layout:replace="components/header.html :: header"></nav>
+    <header class="pt-2"  th:if="${session.isLogin == false}">
+      <nav layout:replace="components/header :: header" ></nav>
+      <!--    <nav layout:replace="components/header :: login-header"></nav>-->
+    </header>
+
+    <header class="pt-2" th:if="${session.isLogin == true}">
+      <!--    <nav layout:replace="components/header :: header"></nav>-->
+      <nav layout:replace="components/header :: login-header"></nav>
     </header>
     <!-- header end -->
 

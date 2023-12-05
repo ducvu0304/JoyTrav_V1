@@ -8,58 +8,76 @@ import com.JoyTrav.model.Tour;
 import com.JoyTrav.service.BookingService;
 import com.JoyTrav.service.CustomerService;
 import com.JoyTrav.service.TourService;
+import com.JoyTrav.utils.IdGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.RedirectView;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Controller
 public class TourController {
 
+    private static final Pagination<Tour> TOUR_PAGINATION = new Pagination<>();
+
+    @Autowired
+    private IdGenerator generator;
+
     @Autowired
     private BookingService bookingService;
+
     @Autowired
     private CustomerService customerService;
 
     @Autowired
     private TourService tourService;
 
+
     @GetMapping("/tour")
     public String tourPage(Model model) {
-        Pagination<Tour> pagination = tourService.findPage(1);
-        System.out.println("cur: " + pagination.getCurrentPage());
+        int totalPage = tourService.fetchALl().size()/5;
 
-        if(!pagination.getList().isEmpty()) {
-            model.addAttribute("tourList", pagination.getList());
-            model.addAttribute("pageNumbers", pagination.getPageNumbers());
-            model.addAttribute("curPage", pagination.getCurrentPage());
-        }
+        TOUR_PAGINATION.setTotalPage(totalPage);
+        TOUR_PAGINATION.setList(tourService.fetchALl());
+        TOUR_PAGINATION.setPageNumbers(generator.pageNumbers(totalPage));
+
+        model.addAttribute("tourList", tourService.findPage(1, tourService.fetchALl()));
+        model.addAttribute("pageNumbers", TOUR_PAGINATION.getPageNumbers());
+        model.addAttribute("curPage",1);
 
         return "tour";
     }
 
     @GetMapping("/tour/page={page}")
     public String findPage(@PathVariable int page, Model model) {
+        List<Tour> tours = tourService.findPage(page, TOUR_PAGINATION.getList());
 
-        Pagination<Tour> pagination = tourService.findPage(page);
 
-        if(!pagination.getList().isEmpty()) {
-            model.addAttribute("tourList", pagination.getList());
-            model.addAttribute("pageNumbers", pagination.getPageNumbers());
-            model.addAttribute("curPage", pagination.getCurrentPage());
-        }
+        model.addAttribute("tourList", tours);
+        model.addAttribute("pageNumbers", TOUR_PAGINATION.getPageNumbers());
+        model.addAttribute("curPage",page);
+
+
+        return "tour";
+    }
+
+    @GetMapping("/tour/type={tourType}")
+    public String getTourByType(@PathVariable("tourType") String type, Model model) {
+        List<Tour> list = tourService.getTourByType(type);
+        int totalPage = list.size()/5;
+
+        TOUR_PAGINATION.setList(list);
+        TOUR_PAGINATION.setPageNumbers(generator.pageNumbers(totalPage));
+        TOUR_PAGINATION.setCurrentPage(1);
+
+
+        model.addAttribute("tourList", tourService.findPage(1, TOUR_PAGINATION.getList()));
+        model.addAttribute("pageNumbers", TOUR_PAGINATION.getPageNumbers());
+        model.addAttribute("curPage", TOUR_PAGINATION.getCurrentPage());
 
         return "tour";
     }
@@ -68,11 +86,11 @@ public class TourController {
     public String viewTourDetail(@PathVariable String id, Model model) {
         Optional<Tour> tour = tourService.getById(id);
 
-        if(tour.isPresent()) {
+        if (tour.isPresent()) {
             TourDetail tourDetail = tourService.convertToTourDetail(tour.get());
             model.addAttribute("tourDetail", tourDetail);
             return "tour-details";
-        }else {
+        } else {
             return "redirect:/tour";
         }
     }
@@ -81,13 +99,16 @@ public class TourController {
     public String viewBookingDetail(@PathVariable("tourID") String tourId, Model model) {
         Optional<Tour> optionalTour = tourService.getById(tourId);
 
-        if(optionalTour.isPresent()) {
-            model.addAttribute("tour", optionalTour.get());
+        if (optionalTour.isPresent()) {
+            TourDetail tourDetail = tourService.convertToTourDetail(optionalTour.get());
+
+            model.addAttribute("tour", tourDetail);
             return "booking-details";
         }
 
         return "booking-details";
     }
+
 
     @GetMapping("/tour/tourName={id}/booking")
     public String viewBookingPage(@PathVariable String id, Model model) {
@@ -95,10 +116,10 @@ public class TourController {
 
         model.addAttribute("customer", new Customer());
 
-        if(tour.isPresent()) {
+        if (tour.isPresent()) {
             model.addAttribute("tour", tour.get());
             return "tour-details";
-        }else {
+        } else {
             return "redirect:/tour";
         }
     }
@@ -117,14 +138,14 @@ public class TourController {
         int infantsNumber = 0;
 
 
-        if(customerDTO != null) {
+        if (customerDTO != null) {
             model.addAttribute("customerInfo", customerDTO);
         }
 
 
         Optional<Booking> booking = bookingService.getById(bookingId);
 
-        if(booking.isPresent()) {
+        if (booking.isPresent()) {
             model.addAttribute("bookingInfo", booking.get());
 
             adultsNumber = booking.get().getPassengers()
@@ -140,18 +161,23 @@ public class TourController {
                     .stream().filter(passenger -> passenger.getGroup().equals(Group.INFANTS)).toList().size();
         }
 
-        BookingSummary bookingSummary =  new BookingSummary();
+        BookingSummary bookingSummary = new BookingSummary();
+        Optional<Tour> optionalTour = tourService.getById(tourId);
+        TourDetail tourDetail = null;
+        if(optionalTour.isPresent()) {
+            tourDetail = tourService.convertToTourDetail(optionalTour.get());
+        }
 
-        TourDTO tourDTO =  tourService.covertToTourDTO(tourId);
 
-        if (tourDTO != null) {
-            bookingSummary.setTourDTO(tourDTO);
+        if (tourDetail != null) {
+            bookingSummary.setTourDetail(tourDetail);
             bookingSummary.setTotal(booking.get().getTotal());
             bookingSummary.setAdultsNumber(adultsNumber);
             bookingSummary.setChildrenNumber(childrenNumber);
             bookingSummary.setChildrenNumber(infantsNumber);
             bookingSummary.setToddlersNumber(toddlersNumber);
-        };
+        }
+
 
         model.addAttribute("bookingSummary", bookingSummary);
 
@@ -159,11 +185,11 @@ public class TourController {
     }
 
     @GetMapping("/payment/process-payment/bookingId={bookingId}")
-    public String  processPayment(@PathVariable String bookingId,
-                                       Model model) {
+    public String processPayment(@PathVariable String bookingId,
+                                 Model model) {
         Optional<Booking> booking = bookingService.getById(bookingId);
 
-        if(booking.isPresent()) {
+        if (booking.isPresent()) {
             bookingService.changeStatus(bookingId);
             bookingService.save(booking.get());
             List<OfferTour> firstOffers = tourService.fetchFirstOffers();
@@ -176,4 +202,6 @@ public class TourController {
 
         return "home";
     }
+
+
 }

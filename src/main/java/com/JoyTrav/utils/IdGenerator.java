@@ -22,6 +22,7 @@ public class IdGenerator {
     public String generateBookingID() {return "BOOKING"+generateCode();}
 
     public List<Integer> pageNumbers(int totalPage) {
+
         return  IntStream.rangeClosed(1,  totalPage)
                 .boxed()
                 .collect(Collectors.toList());

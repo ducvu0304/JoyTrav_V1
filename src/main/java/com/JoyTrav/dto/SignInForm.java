@@ -8,6 +8,7 @@ public class SignInForm {
 
     @NotBlank(message = "Please enter email !")
     private String password;
+    private boolean isLogin;
 
     public SignInForm() {
     }
@@ -26,5 +27,13 @@ public class SignInForm {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean isLogin() {
+        return isLogin;
+    }
+
+    public void setLogin(boolean login) {
+        isLogin = login;
     }
 }

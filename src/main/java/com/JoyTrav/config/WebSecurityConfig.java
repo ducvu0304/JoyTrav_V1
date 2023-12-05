@@ -1,7 +1,8 @@
 package com.JoyTrav.config;
 
 
-import com.JoyTrav.security.CustomUserDetailService;
+import com.JoyTrav.security.JwtAuthFilter;
+import com.JoyTrav.security.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -15,6 +16,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -23,6 +25,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint;
 
 @Configuration
@@ -31,8 +34,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationEn
 public class WebSecurityConfig {
 
     @Autowired
-    private CustomUserDetailService userDetailsService;
-
+    public UserDetailsService userDetailsService;
 
     @Bean
     public AuthenticationManager authenticationManager() {
@@ -49,19 +51,26 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
         http.csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/**", "/home/**","/signup/**", "/tour/**").permitAll()
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/**").permitAll()
                 )
                 .formLogin((form) -> form
                         .loginPage("/sign-in")
                         .permitAll()
                 )
-                .logout((logout) -> logout.permitAll());
+                .logout((logout) -> logout
+                        .logoutUrl("/processLogout")
+                        .permitAll());
 
         return http.build();
     }
 
+//    @Bean
+//    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+//        return config.getAuthenticationManager();
+//    }
 
     @Bean
     public PasswordEncoder passwordEncoder (){

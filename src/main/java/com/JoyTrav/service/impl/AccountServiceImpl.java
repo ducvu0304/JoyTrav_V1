@@ -1,5 +1,6 @@
 package com.JoyTrav.service.impl;
 
+import com.JoyTrav.dto.AccountDTO;
 import com.JoyTrav.dto.SignUpForm;
 import com.JoyTrav.model.Account;
 import com.JoyTrav.repository.AccountRepository;
@@ -73,6 +74,15 @@ public class AccountServiceImpl implements AccountService {
         account.setRole("USER");
 
         return accountRepository.save(account);
+    }
+
+    @Override
+    public AccountDTO convertToAccountDTO(Account account) {
+        AccountDTO accountDTO  = new AccountDTO();
+        accountDTO.setFirstName(accountDTO.getFirstName());
+        accountDTO.setEmail(accountDTO.getEmail());
+
+        return accountDTO;
     }
 
 

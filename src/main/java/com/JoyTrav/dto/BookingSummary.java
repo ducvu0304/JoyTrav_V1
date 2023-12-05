@@ -1,22 +1,25 @@
 package com.JoyTrav.dto;
 
 public class BookingSummary {
-    private TourDTO tourDTO;
+    private TourDetail tourDetail;
     private int adultsNumber;
     private int childrenNumber;
     private int toddlersNumber;
     private int infantsNumber;
+
+    private int adultsPrice;
+    private int childrenPrice;
     private int total;
 
     public BookingSummary() {
     }
 
-    public TourDTO getTourDTO() {
-        return tourDTO;
+    public TourDetail getTourDetail() {
+        return tourDetail;
     }
 
-    public void setTourDTO(TourDTO tourDTO) {
-        this.tourDTO = tourDTO;
+    public void setTourDetail(TourDetail tourDetail) {
+        this.tourDetail = tourDetail;
     }
 
     public int getAdultsNumber() {
@@ -58,4 +61,21 @@ public class BookingSummary {
     public void setTotal(int total) {
         this.total = total;
     }
+
+    public int getAdultsPrice() {
+        return adultsPrice;
+    }
+
+    public void setAdultsPrice(int adultsPrice) {
+        this.adultsPrice = adultsPrice;
+    }
+
+    public int getChildrenPrice() {
+        return childrenPrice;
+    }
+
+    public void setChildrenPrice(int childrenPrice) {
+        this.childrenPrice = childrenPrice;
+    }
 }
+

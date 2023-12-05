@@ -1,9 +1,6 @@
 package com.JoyTrav.controller;
 
-import com.JoyTrav.dto.BookingDTO;
-import com.JoyTrav.dto.BookingDetail;
-import com.JoyTrav.dto.PassengerDTO;
-import com.JoyTrav.dto.PaymentDetail;
+import com.JoyTrav.dto.*;
 import com.JoyTrav.model.Booking;
 
 import com.JoyTrav.model.Customer;
@@ -16,6 +13,8 @@ import com.JoyTrav.service.TourService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -60,6 +59,15 @@ public class BookingController {
 
 
         return paymentDetail;
+    }
+
+    @PostMapping(value = "/tour/search")
+    public ResponseEntity<?> search(@RequestBody SearchObj searchObj) {
+        Tour tour = tourService.searchTour(searchObj);
+
+        System.out.println(tour.getId());
+
+        return new ResponseEntity<>(tour.getId(), HttpStatus.OK);
     }
 
 }

@@ -36,6 +36,9 @@ public class Account implements Serializable {
     @Column(name = "status")
     private boolean status;
 
+    @Column(name = "is_login")
+    private boolean isLogin;
+
     private enum Role {
         ADMIN, USER
     }
@@ -168,6 +171,14 @@ public class Account implements Serializable {
                 ", role='" + role + '\'' +
                 ", status=" + status +
                 '}';
+    }
+
+    public boolean isLogin() {
+        return isLogin;
+    }
+
+    public void setLogin(boolean login) {
+        isLogin = login;
     }
 }
 

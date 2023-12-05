@@ -3,11 +3,10 @@ package com.JoyTrav.dto;
 import java.util.List;
 
 public class Pagination<T>{
-    private int pageSIze;
+    private int pageSize;
     private int currentPage;
     private int totalPage;
     private List<Integer> pageNumbers;
-
     private List<T> list;
 
     public Pagination() {
@@ -18,12 +17,12 @@ public class Pagination<T>{
 
     }
 
-    public int getPageSIze() {
-        return pageSIze;
+    public int getPageSize() {
+        return pageSize;
     }
 
-    public void setPageSIze(int pageSIze) {
-        this.pageSIze = pageSIze;
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
     }
 
     public int getCurrentPage() {
@@ -51,10 +50,12 @@ public class Pagination<T>{
     }
 
     public List<Integer> getPageNumbers() {
-        return pageNumbers;
+        return
+                pageNumbers;
     }
 
     public void setPageNumbers(List<Integer> pageNumbers) {
+
         this.pageNumbers = pageNumbers;
     }
 }
