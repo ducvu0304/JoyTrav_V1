@@ -332,27 +332,6 @@ function search() {
     searchObj.category = category.value;
 
 
-    // fetch('http://localhost:8080/tour/search', {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json'
-    //     },
-    //     body: JSON.stringify(searchObj)
-    // })
-    //     .then(response => {
-    //         if (!response.ok) {
-    //             throw new Error('Network response was not ok');
-    //         }
-    //         return response.json(); // Parse the response as JSON
-    //     })
-    //     .then(data => {
-    //         console.log(data); // Access the value of the 'data' response
-    //         // location.href = `/tour/tourName=${data.getId}`;
-    //     })
-    //     .catch(error => {
-    //         console.error('Fetch error:', error);
-    //     });
-
     $.ajax({
         type: 'POST',
         url: 'http://localhost:8080/tour/search',
@@ -367,6 +346,22 @@ function search() {
     })
 }
 
+
+$(function () {
+    $('input[name="daterange"]').daterangepicker(
+        {
+            opens: "left",
+        },
+        function (start, end, label) {
+            console.log(
+                "A new date selection was made: " +
+                start.format("YYYY-MM-DD") +
+                " to " +
+                end.format("YYYY-MM-DD")
+            );
+        }
+    );
+});
 
 
 

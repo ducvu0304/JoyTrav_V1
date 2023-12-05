@@ -243,3 +243,8 @@ header .nav-link,
 .show-menu {
     display: block;
 }
+
+.page-active {
+    color: #fff;
+    background-color: #0d6efd
+}
